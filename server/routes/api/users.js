@@ -14,6 +14,10 @@ const User = require('../../models/User');
 // Load keys
 const keys =require('../../config/keys');
 
+// Load Input Validation
+const validateRegisterInput = require('../../validation/register');
+const validateLoginInput = require('../../validation/login');
+
 // @route   GET api/users/test
 // @desc    Tests users route
 // @access  Public
@@ -23,6 +27,13 @@ router.get('/test', (req, res) => res.json({msg: "Users works!"}));
 // @desc    Register a user
 // @access  Public
 router.post('/register', (req,res) => {
+    // Validate the input data
+    const { errors, isValid } = validateRegisterInput(req.body);
+    // Check the validation
+    if(!isValid) {
+        return res.status(400).json(errors);
+    }
+
     User.findOne({ email: req.body.email })
         .then(user => {
             if(user) {
@@ -57,6 +68,13 @@ router.post('/register', (req,res) => {
 // @desc    Login User / return JWT token
 // @access  Public
 router.post('/login', (req,res) => {
+    // Validate the input data
+    const { errors, isValid } = validateLoginInput(req.body);
+    // Check the validation
+    if(!isValid) {
+        return res.status(400).json(errors);
+    }
+
     const email = req.body.email;
     const password = req.body.password;
 
@@ -73,7 +91,7 @@ router.post('/login', (req,res) => {
                     if(isMatch) {
                         // User match
                         // Create payload for JWT
-                        const payload = { id: user.id, name: user.name, avatar: user.avatar }
+                        const payload = { id: user.id, name: user.name, avatar: user.avatar };
                         // sign token
                         jwt.sign(
                             payload,
