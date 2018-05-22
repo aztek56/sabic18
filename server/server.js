@@ -35,10 +35,10 @@ require('./config/passport')(passport);
 
 // Use routes
 app.use('/api/users', users);
-app.use('/api/profile.js', profile);
+app.use('/api/profile', profile);
 app.use('/api/posts', posts);
 
-const port = process.env.PORT || 5001;
+const port = process.env.PORT || 5000;
 
 // To display values of variables to display we use back ticks (ES6)
 app.listen(port, () => console.log(`Server running on port ${port}`));
