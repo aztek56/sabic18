@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 // Create schema
 const UserSchema = new Schema({
-        name: {
+    name: {
         type: String,
         required: true
     },
@@ -26,4 +26,6 @@ const UserSchema = new Schema({
 });
 
 module.exports = User = mongoose.model('users', UserSchema);
+
+
 

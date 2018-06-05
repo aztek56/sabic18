@@ -52,13 +52,13 @@ router.post('/register', (req,res) => {
                 });
 
                 bcrypt.genSalt(10, (err, salt) => {
-                    bcrypt.hash(newUser.password, salt, (err, hash) => {
-                        if(err) throw err;
-                        newUser.password = hash;
-                        newUser.save()
-                            .then(user => res.json(user))
-                            .catch(err => console.log(err));
-                    })
+                   bcrypt.hash(newUser.password, salt, (err, hash) => {
+                       if(err) throw err;
+                       newUser.password = hash;
+                       newUser.save()
+                           .then(user => res.json(user))
+                           .catch(err => console.log(err));
+                   })
                 });
             }
         })
@@ -75,10 +75,10 @@ router.post('/login', (req,res) => {
         return res.status(400).json(errors);
     }
 
-    const email = req.body.email;
-    const password = req.body.password;
+   const email = req.body.email;
+   const password = req.body.password;
 
-    // Find user by email
+   // Find user by email
     User.findOne({ email: email })
         .then(user => {
             // Check for user
@@ -116,7 +116,7 @@ router.post('/login', (req,res) => {
 // @desc    Return current user
 // @access  Private
 router.get('/current', passport.authenticate('jwt', { session:false }), (req, res) => {
-    //res.json({ msg: 'Success' });
+   //res.json({ msg: 'Success' });
     res.json(req.user);
 });
 

@@ -15,10 +15,10 @@ module.exports = function validateProfileInput(data) {
         errors.handle = 'Profile handle is required';
     }
     if(Validator.isEmpty(data.status)) {
-        error.status = 'Status field is required';
+        errors.status = 'Status field is required';
     }
     if(Validator.isEmpty(data.skills)) {
-        error.skills = 'Skills field is required';
+        errors.skills = 'Skills field is required';
     }
     if(!isEmpty(data.website)) {
         if(!Validator.isURL(data.website)) {

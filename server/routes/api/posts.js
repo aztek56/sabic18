@@ -14,7 +14,7 @@ const validatePostInput = require('../../validation/post');
 // @route   GET api/posts/test
 // @desc    Tests posts route
 // @access  Public
-router.get('/test', (req, res) => res.json({msg: "Posts works!"}));
+router.get('/test', (req, res) => res.json({msg: "posts works!"}));
 
 // @route   GET api/posts
 // @desc    Get post
@@ -164,25 +164,25 @@ router.post('/comment/:id', passport.authenticate('jwt', { session: false }), (r
     }
 
     Post.findById(req.params.id)
-        .then(post => {
-            if(!post) {
-                errors.noprofile = 'There is no post with that id';
-                res.status(404).json(errors);
-            }
-            const newComment = {
-                text: req.body.text,
-                name: req.body.name,
-                avatar: req.body.avatar,
-                user: req.user.id
-            };
+       .then(post => {
+           if(!post) {
+               errors.noprofile = 'There is no post with that id';
+               res.status(404).json(errors);
+           }
+           const newComment = {
+               text: req.body.text,
+               name: req.body.name,
+               avatar: req.body.avatar,
+               user: req.user.id
+           };
 
-            // Add to comments array
-            post.comments.unshift(newComment);
+           // Add to comments array
+           post.comments.unshift(newComment);
 
-            // Save
-            post.save().then(post => res.json(post));
-        })
-        .catch(err => res.status(404).json({ postnotfound: 'No post found' }));
+           // Save
+           post.save().then(post => res.json(post));
+       })
+       .catch(err => res.status(404).json({ postnotfound: 'No post found' }));
 });
 
 // @route   DELETE api/posts/comment/:id/:comment_id
